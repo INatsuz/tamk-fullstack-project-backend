@@ -1,0 +1,23 @@
+type Query {
+    postsByUsername(username: String): [Post]
+}
+
+type Post {
+    id: ID!
+    title: String!
+    message: String!
+    user: User!
+    replies: [Post]
+}
+
+type User {
+    id: ID!
+    username: String!
+    email: String!
+    roles: [Role]
+}
+
+type Role {
+    id: ID!
+    name: String!
+}
