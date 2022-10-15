@@ -6,7 +6,6 @@ import com.vraminhos.backend.repositories.PostRepository;
 import com.vraminhos.backend.repositories.UserRepository;
 import com.vraminhos.backend.security.services.UserDetailsImpl;
 import java.security.Principal;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
@@ -14,8 +13,10 @@ import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @Controller
+@CrossOrigin
 public class GraphQLController {
 	UserRepository userRepository;
 	PostRepository postRepository;
@@ -36,7 +37,6 @@ public class GraphQLController {
 	@PreAuthorize("hasRole('ROLE_USER')")
 	@QueryMapping
 	public Iterable<Post> getAllPosts() {
-
 		return postRepository.findAll();
 	}
 

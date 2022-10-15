@@ -1,4 +1,4 @@
-package com.vraminhos.backend.controllers;
+package com.vraminhos.backend.graphql;
 
 import graphql.schema.GraphQLScalarType;
 import org.springframework.beans.factory.annotation.Autowired;
