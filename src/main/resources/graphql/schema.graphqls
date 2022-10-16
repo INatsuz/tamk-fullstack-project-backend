@@ -3,11 +3,15 @@ scalar Date
 type Query {
     getPostsByUsername(username: String): [Post]
     getAllPosts: [Post]
+    getTop10LikedPosts: [Post]
     getAllUsers: [User]
 }
 
 type Mutation {
     createPost(postInput: PostInput): Post
+    likePost(postId: ID): Post
+    unlikePost(postId: ID): Post
+    removeCommentById(commentId: ID): Post
 }
 
 input PostInput {
@@ -31,6 +35,7 @@ type Post {
     user: User!
     createdAt: Date!
     comments: [Comment]!
+    likes: [User]!
     numComments: Int!
     numLikes: Int!
 }

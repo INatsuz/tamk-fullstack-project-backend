@@ -81,4 +81,18 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User user) {
+			return this.id.equals(user.id);
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
 }

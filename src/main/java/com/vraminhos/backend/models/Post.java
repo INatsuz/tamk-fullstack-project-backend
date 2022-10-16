@@ -127,7 +127,12 @@ public class Post {
 
 	public void addComment(Comment comment) {
 		comments.add(comment);
-		numComments++;
+		numComments = comments.size();
+	}
+
+	public void removeCommentById(String id) {
+		comments.remove(new Comment(id));
+		numComments = comments.size();
 	}
 
 	public int getNumLikes() {
@@ -148,6 +153,12 @@ public class Post {
 
 	public void addLike(User user) {
 		likes.add(user);
-		numLikes++;
+		numLikes = likes.size();
 	}
+
+	public void removeLike(User user) {
+		likes.remove(user);
+		numLikes = likes.size();
+	}
+
 }

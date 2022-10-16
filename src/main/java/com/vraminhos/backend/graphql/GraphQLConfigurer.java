@@ -14,8 +14,8 @@ public class GraphQLConfigurer {
 
 	@Bean
 	RuntimeWiringConfigurer configurer() {
-		GraphQLScalarType scalarType = dateScalar;
-		return (builder) -> builder.scalar(scalarType);
+		GraphQLScalarType dateScalarType = dateScalar;
+		return (builder) -> builder.scalar(dateScalarType);
 	}
 
 }

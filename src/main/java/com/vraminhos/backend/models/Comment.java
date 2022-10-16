@@ -11,7 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Comment {
 
 	@Id
-	private String Id;
+	private String id;
 
 	@NotBlank
 	private String message;
@@ -26,23 +26,27 @@ public class Comment {
 	private Date createdAt;
 
 	public Comment() {
-		this.Id = new ObjectId().toString();
+		this.id = new ObjectId().toString();
 		this.createdAt = new Date();
 	}
 
+	public Comment(String id) {
+		this.id = id;
+	}
+
 	public Comment(String message, User user) {
-		this.Id = new ObjectId().toString();
+		this.id = new ObjectId().toString();
 		this.createdAt = new Date();
 		this.message = message;
 		this.user = user;
 	}
 
 	public String getId() {
-		return Id;
+		return id;
 	}
 
 	public void setId(String id) {
-		Id = id;
+		this.id = id;
 	}
 
 	public String getMessage() {
@@ -69,4 +73,16 @@ public class Comment {
 		this.createdAt = createdAt;
 	}
 
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Comment comment) {
+			return id.equals(comment.getId());
+		}
+		return false;
+	}
 }
