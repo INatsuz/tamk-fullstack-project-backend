@@ -5,7 +5,8 @@ import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class RegisterRequest {
+public class RegisterAdminRequest {
+
 	@NotBlank
 	private String username;
 
@@ -15,6 +16,8 @@ public class RegisterRequest {
 
 	@NotBlank
 	private String password;
+
+	private List<ERole> roles;
 
 	public String getUsername() {
 		return username;
@@ -38,5 +41,13 @@ public class RegisterRequest {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public List<ERole> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<ERole> roles) {
+		this.roles = roles;
 	}
 }

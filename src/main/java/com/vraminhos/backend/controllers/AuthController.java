@@ -1,8 +1,10 @@
 package com.vraminhos.backend.controllers;
 
+import com.vraminhos.backend.models.ERole;
 import com.vraminhos.backend.models.Role;
 import com.vraminhos.backend.models.User;
 import com.vraminhos.backend.payload.requests.LoginRequest;
+import com.vraminhos.backend.payload.requests.RegisterAdminRequest;
 import com.vraminhos.backend.payload.requests.RegisterRequest;
 import com.vraminhos.backend.repositories.RoleRepository;
 import com.vraminhos.backend.repositories.UserRepository;
@@ -68,14 +70,34 @@ public class AuthController {
 		System.out.println(registerRequest.getUsername());
 		System.out.println(registerRequest.getEmail());
 		System.out.println(registerRequest.getPassword());
-		System.out.println(registerRequest.getRoles());
+
+		Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow();
+		Set<Role> roles = new HashSet<>();
+		roles.add(userRole);
+
+		User user = new User(registerRequest.getUsername(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()));
+		user.setRoles(roles);
+
+		userRepository.insert(user);
+
+		return "Success";
+	}
+
+	@PreAuthorize("hasRole('ROLE_USER')")
+	@PostMapping("/signup_admin")
+	public String registerUserAdmin(@Valid @RequestBody RegisterAdminRequest registerAdminRequest) {
+		System.out.println(registerAdminRequest);
+		System.out.println(registerAdminRequest.getUsername());
+		System.out.println(registerAdminRequest.getEmail());
+		System.out.println(registerAdminRequest.getPassword());
+		System.out.println(registerAdminRequest.getRoles());
 
 		Set<Role> roles = new HashSet<>();
-		registerRequest.getRoles().forEach(eRole -> {
+		registerAdminRequest.getRoles().forEach(eRole -> {
 			roles.add(roleRepository.findByName(eRole).orElseThrow());
 		});
 
-		User user = new User(registerRequest.getUsername(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()));
+		User user = new User(registerAdminRequest.getUsername(), registerAdminRequest.getEmail(), encoder.encode(registerAdminRequest.getPassword()));
 		user.setRoles(roles);
 
 		userRepository.insert(user);
