@@ -63,7 +63,6 @@ public class AuthController {
 	}
 
 	@PostMapping("/signup")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public String registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
 		System.out.println(registerRequest);
 		System.out.println(registerRequest.getUsername());
