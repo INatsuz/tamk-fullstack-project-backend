@@ -12,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.MutationMapping;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Controller;
 
@@ -44,6 +43,12 @@ public class GraphQLController {
 		User user = userRepository.findByUsername(username).orElseThrow();
 
 		return postRepository.findByUser(user).orElseThrow();
+	}
+
+//	@PreAuthorize("#username.equals(authentication.principal.username)")
+	@QueryMapping
+	public Iterable<Post> getTopPosts() {
+		return postRepository.findTopPosts().orElseThrow();
 	}
 
 //	@PreAuthorize("#username.equals(authentication.principal.username)")

@@ -3,6 +3,7 @@ scalar Date
 type Query {
     getPostsByUsername(username: String): [Post]
     getAllPosts: [Post]
+    getTopPosts: [Post]
     getTop10LikedPosts: [Post]
     getAllUsers: [User]
 }

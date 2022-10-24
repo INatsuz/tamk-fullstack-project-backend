@@ -1,14 +1,20 @@
 package com.vraminhos.backend.controllers;
 
+import com.vraminhos.backend.models.Role;
+import com.vraminhos.backend.models.User;
 import com.vraminhos.backend.payload.requests.LoginRequest;
+import com.vraminhos.backend.payload.requests.RegisterRequest;
 import com.vraminhos.backend.repositories.RoleRepository;
 import com.vraminhos.backend.repositories.UserRepository;
 import com.vraminhos.backend.security.jwt.JwtUtils;
 import com.vraminhos.backend.security.services.UserDetailsImpl;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -54,6 +60,28 @@ public class AuthController {
 				.collect(Collectors.toList());
 
 		return jwt;
+	}
+
+	@PostMapping("/signup")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	public String registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+		System.out.println(registerRequest);
+		System.out.println(registerRequest.getUsername());
+		System.out.println(registerRequest.getEmail());
+		System.out.println(registerRequest.getPassword());
+		System.out.println(registerRequest.getRoles());
+
+		Set<Role> roles = new HashSet<>();
+		registerRequest.getRoles().forEach(eRole -> {
+			roles.add(roleRepository.findByName(eRole).orElseThrow());
+		});
+
+		User user = new User(registerRequest.getUsername(), registerRequest.getEmail(), encoder.encode(registerRequest.getPassword()));
+		user.setRoles(roles);
+
+		userRepository.insert(user);
+
+		return "Success";
 	}
 
 }
