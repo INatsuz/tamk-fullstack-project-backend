@@ -32,4 +32,13 @@ public class Role {
 	public void setName(ERole name) {
 		this.name = name;
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof ERole eRole) {
+			return this.getName().equals(eRole);
+		}
+
+		return super.equals(obj);
+	}
 }

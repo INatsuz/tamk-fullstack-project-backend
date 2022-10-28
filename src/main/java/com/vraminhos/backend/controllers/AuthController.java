@@ -66,11 +66,6 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public String registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
-		System.out.println(registerRequest);
-		System.out.println(registerRequest.getUsername());
-		System.out.println(registerRequest.getEmail());
-		System.out.println(registerRequest.getPassword());
-
 		Role userRole = roleRepository.findByName(ERole.ROLE_USER).orElseThrow();
 		Set<Role> roles = new HashSet<>();
 		roles.add(userRole);

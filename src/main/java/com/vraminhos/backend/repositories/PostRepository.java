@@ -18,6 +18,6 @@ public interface PostRepository extends MongoRepository<Post, String> {
 	Optional<Post> findByCommentsId(String id);
 
 	@Aggregation(pipeline = {"{$set: {totalInteraction: {$add: ['$numLikes', '$numComments']}}}", "{$sort: {'totalInteraction': -1}}", "{$project: {'totalInteraction': 0}}"})
-	Optional<List<Post>> findTopPosts();
+	Optional<List<Post>> findTopPosts(Pageable pageable);
 
 }

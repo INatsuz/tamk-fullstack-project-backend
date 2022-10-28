@@ -1,24 +1,33 @@
 scalar Date
 
 type Query {
-    getPostsByUsername(username: String): [Post]
-    getAllPosts: [Post]
-    getTopPosts: [Post]
-    getTop10LikedPosts: [Post]
+    getAllPosts(amount: Int, page: Int): [Post]
+    getPostById(postId: ID!): Post
+    getPostsByUsername(username: String!): [Post]
+    getTopPosts(amount: Int!): [Post]
+    getTopLikedPosts(amount: Int!): [Post]
     getAllUsers: [User]
+    getUserDetailsById(userId: ID!): User
 }
 
 type Mutation {
     createPost(postInput: PostInput): Post
+    deletePostById(postId: ID!): Post
     likePost(postId: ID): Post
     unlikePost(postId: ID): Post
-    removeCommentById(commentId: ID): Post
+    addComment(commentInput: CommentInput!): Post
+    removeCommentById(commentId: ID!): Post
 }
 
 input PostInput {
     title: String!
     message: String!
     category: String!
+}
+
+input CommentInput {
+    postId: ID!
+    message: String!
 }
 
 type Comment {
@@ -46,6 +55,7 @@ type User {
     username: String!
     email: String!
     roles: [Role]
+    bio: String
 }
 
 type Role {

@@ -30,6 +30,8 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
+	private String bio;
+
 	@DBRef(lazy = true)
 	private Set<Role> roles = new HashSet<>();
 
@@ -40,6 +42,13 @@ public class User {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+	}
+
+	public User(String username, String email, String password, String bio) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.bio = bio;
 	}
 
 	public String getId() {
@@ -72,6 +81,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getBio() {
+		return bio;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 
 	public Set<Role> getRoles() {
